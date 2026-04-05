@@ -1,44 +1,130 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ktil — drink</title>
+    <title>Modern Inattian Verb Conjugator</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 500px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        input, select, button {
+            padding: 10px;
+            margin: 5px;
+            width: 95%;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .examples {
+            margin-top: 20px;
+            background: #eef;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>ktil — drink</h1>
 
-    <h2>Conjugation</h2>
-    <table border="1">
+<h1>Modern Inattian Verb Conjugator</h1>
+
+<div class="box">
+    <input type="text" id="verb" placeholder="Enter verb root (e.g. ktil)">
+    
+    <select id="tense">
+        <option value="present">Present</option>
+        <option value="past">Past</option>
+        <option value="future">Future</option>
+    </select>
+
+    <button onclick="conjugate()">Conjugate</button>
+
+    <div id="result"></div>
+
+    <div class="examples">
+        <h3>Example Sentences</h3>
+        <div id="sentences"></div>
+    </div>
+</div>
+
+<script>
+function conjugate() {
+    let verb = document.getElementById("verb").value;
+    let tense = document.getElementById("tense").value;
+
+    let endings = {
+        present: {I:"o", You:"as", He:"a"},
+        past: {I:"ta", You:"tas", He:"ta"},
+        future: {I:"u", You:"us", He:"u"}
+    };
+
+    let forms = {
+        I: verb + endings[tense]["I"],
+        You: verb + endings[tense]["You"],
+        He: verb + endings[tense]["He"]
+    };
+
+    let table = `
+    <table>
         <tr>
             <th>Person</th>
-            <th>Present</th>
-            <th>Past</th>
+            <th>Form</th>
         </tr>
         <tr>
             <td>I</td>
-            <td>ktilo</td>
-            <td>ktilta</td>
+            <td>${forms.I}</td>
         </tr>
         <tr>
             <td>You</td>
-            <td>ktilas</td>
-            <td>ktiltas</td>
+            <td>${forms.You}</td>
         </tr>
         <tr>
             <td>He/She</td>
-            <td>ktila</td>
-            <td>ktilta</td>
+            <td>${forms.He}</td>
         </tr>
     </table>
+    `;
 
-    <h2>Examples</h2>
-    <ul>
-        <li>I drink water.</li>
-        <li>I drank water yesterday.</li>
-        <li>He drinks every day.</li>
-    </ul>
+    document.getElementById("result").innerHTML = table;
 
-    <p><a href="../index.html">Back to Home</a></p>
+    generateSentences(forms);
+}
+
+function generateSentences(forms) {
+    let sentences = `
+    I sentence: Mi ${forms.I} water.<br>
+    You sentence: Ti ${forms.You} food.<br>
+    He sentence: Si ${forms.He} every day.
+    `;
+
+    document.getElementById("sentences").innerHTML = sentences;
+}
+</script>
 
 </body>
 </html>
